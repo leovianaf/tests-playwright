@@ -4,7 +4,7 @@ def get_duracao(jogo, detalhes):
   """Verifica se há um `span.hidden` para duração e retorna o último valor disponível."""
   try:
     # Verifica se há pelo menos um span.hidden antes de tentar acessar
-    if jogo.locator("div.group.flex span.hidden").count() > 0:
+    if jogo.locator("div.group.flex span.hidden").is_visible():
       span_duracao = jogo.locator("div.group.flex span.hidden").last.inner_text()
       return span_duracao.strip() if span_duracao else "N/A"
     
