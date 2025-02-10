@@ -66,3 +66,20 @@ def get_popular_games(url):
   
   browser.close()
   playwright.stop()  # Encerra o Playwright
+
+def get_reducted_games(url):
+  playwright, browser, page = init_browser()
+  
+  try:
+    page.goto(url, wait_until="domcontentloaded", timeout=60000)
+  except Exception as e:
+    print(f"Erro ao carregar a página: {e}")
+    return
+
+  # Carrega a página inteira aguardando o carregamento completo
+  for x in range(1, 4):
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    page.wait_for_timeout(1000)
+
+  # Captura todos os jogos dentro da seção "Reduções"
+  jogos = page.locator("div.min-w-44.mx-auto.flex.w-44.flex-shrink-0").all()
